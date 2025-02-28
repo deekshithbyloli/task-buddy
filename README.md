@@ -103,8 +103,10 @@ yarn install
 yarn dev
 ```
 
-The app will be running at http://localhost:3000.
-Folder Structure
+**The app will be running at**:  ``` http://localhost:3000 ```
+### 5. Folder Structure
+
+```
 
 task-management-app/
 ├── components/ # Reusable components
@@ -118,6 +120,8 @@ task-management-app/
 ├── package.json # Project dependencies
 ├── README.md # Project documentation
 └── tsconfig.json # TypeScript configuration
+
+```
 
 Challenges Faced
 Google Authentication:
