@@ -123,45 +123,52 @@ task-management-app/
 
 ```
 
-Challenges Faced
-Google Authentication:
+## Challenges Faced
 
-Setting up Google OAuth with Supabase required careful configuration of redirect URIs and client IDs.
+### Google Authentication
+Setting up Google OAuth with Supabase required careful configuration of redirect URIs and client IDs.  
+**Solution:** Followed Supabase and Google Cloud documentation to ensure proper setup.
 
-Solution: Followed Supabase and Google Cloud documentation to ensure proper setup.
+### Drag-and-Drop Functionality
+Implementing drag-and-drop for tasks was challenging due to state management and reordering logic.  
+**Solution:** Used `@dnd-kit` library, which provided a robust and flexible API for drag-and-drop.
 
-Drag-and-Drop Functionality:
+### Responsive Design
+Ensuring the app worked seamlessly across devices required careful use of Tailwind CSS and media queries.  
+**Solution:** Adopted a mobile-first approach and tested on multiple screen sizes.
 
-Implementing drag-and-drop for tasks was challenging due to state management and reordering logic.
+---
 
-Solution: Used @dnd-kit library, which provided a robust and flexible API for drag-and-drop.
+## Deployment
+The app is deployed on Vercel. You can access the live version here:  
+[Live Demo](#)
 
-Responsive Design:
+---
 
-Ensuring the app worked seamlessly across devices required careful use of Tailwind CSS and media queries.
+## Screenshots
+![Task Management App Screenshot](#)
 
-Solution: Adopted a mobile-first approach and tested on multiple screen sizes.
+---
 
-Deployment
-The app is deployed on Vercel. You can access the live version here:
-
-Live Demo
-
-Screenshots
-Task Management App Screenshot
-
-Contributing
+## Contributing
 Contributions are welcome! Please follow these steps:
 
-Fork the repository.
+1. Fork the repository.
+2. Create a new branch:
+    ```sh
+    git checkout -b feature/your-feature
+    ```
+3. Commit your changes:
+    ```sh
+    git commit -m 'Add some feature'
+    ```
+4. Push to the branch:
+    ```sh
+    git push origin feature/your-feature
+    ```
+5. Open a pull request.
 
-Create a new branch (git checkout -b feature/your-feature).
+---
 
-Commit your changes (git commit -m 'Add some feature').
-
-Push to the branch (git push origin feature/your-feature).
-
-Open a pull request.
-
-License
-This project is licensed under the MIT License. See the LICENSE file for details.
+## License
+This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
