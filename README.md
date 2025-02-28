@@ -123,6 +123,8 @@ task-management-app/
 
 ```
 
+# Task Management App
+
 ## Challenges Faced
 
 ### Google Authentication
@@ -140,8 +142,8 @@ Ensuring the app worked seamlessly across devices required careful use of Tailwi
 ---
 
 ## Deployment
-The app is deployed on Vercel. You can access the live version here:  
-[Live Demo](#)
+The app is deployed on Netlify. You can access the live version here:  
+[Live Demo](https://taskbuddyy.netlify.app/)
 
 ---
 
@@ -172,3 +174,10 @@ Contributions are welcome! Please follow these steps:
 
 ## License
 This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
+
+---
+
+## Repository
+Check out the source code on GitHub:  
+[Task Buddy GitHub Repository](https://github.com/deekshithbyloli/task-buddy.git)
+
