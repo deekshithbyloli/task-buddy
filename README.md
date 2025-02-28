@@ -326,9 +326,9 @@ The app is deployed on Netlify. You can access the live version here:
 
 ## Screenshots
 ![Task Management App  Home Screenshot](/public/home.png)
-![Task Management Schema Screenshot](/schema.png)
-![Task Management list Screenshot](/task-1.png)
-![Task Management board Screenshot](/task-2.png)
+![Task Management Schema Screenshot](/public/schema.png)
+![Task Management list Screenshot](/public/task-1.png)
+![Task Management board Screenshot](/public/task-2.png)
 
 ---
 
