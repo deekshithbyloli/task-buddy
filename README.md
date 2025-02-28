@@ -48,7 +48,7 @@ A responsive task management application built using **Next.js** and **Supabase*
 
 - **Frontend**: Next.js, TypeScript, Tailwind CSS
 - **Backend**: Supabase (Authentication, Database, Storage)
-- **State Management**: React Query
+- **State Management**: Tanstack Query
 - **Drag-and-Drop**: `@dnd-kit`
 
 ## Prerequisites
