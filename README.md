@@ -122,8 +122,185 @@ task-management-app/
 └── tsconfig.json # TypeScript configuration
 
 ```
+### 5. Supabase Schema Explanation
+# 1. Profiles Table
 
+```
+create table profiles (
+  id uuid references auth.users on delete cascade not null primary key,
+  updated_at timestamp with time zone,
+  username text unique,
+  full_name text,
+  avatar_url text,
+  website text,
+
+  constraint username_length check (char_length(username) >= 3)
+);
+
+-- Enable Row Level Security (RLS)
+alter table profiles enable row level security;
+
+-- Policies
+create policy "Public profiles are viewable by everyone." on profiles
+  for select using (true);
+
+create policy "Users can insert their own profile." on profiles
+  for insert with check ((select auth.uid()) = id);
+
+create policy "Users can update own profile." on profiles
+  for update using ((select auth.uid()) = id);
+
+-- Trigger to create a profile when a new user signs up
+create function public.handle_new_user()
+returns trigger
+set search_path = ''
+as $$
+begin
+  insert into public.profiles (id, full_name, avatar_url)
+  values (new.id, new.raw_user_meta_data->>'full_name', new.raw_user_meta_data->>'avatar_url');
+  return new;
+end;
+$$ language plpgsql security definer;
+
+create trigger on_auth_user_created
+  after insert on auth.users
+  for each row execute procedure public.handle_new_user();
+```
+
+# 2. Tasks Table 
+```
+create table tasks (
+  id uuid default gen_random_uuid() primary key,
+  user_id uuid references auth.users on delete cascade not null,
+  title text not null,
+  description text,
+  category text check (category in ('Work', 'Personal')) not null,
+  due_date date not null,
+  status text check (status in ('To Do', 'In Progress', 'Completed')) not null,
+  position integer not null default 0,
+  created_at timestamp with time zone default now(),
+  updated_at timestamp with time zone default now()
+);
+
+-- Enable RLS and policies
+alter table tasks enable row level security;
+
+create policy "Users can view their own tasks." on tasks
+  for select using (auth.uid() = user_id);
+
+create policy "Users can insert their own tasks." on tasks
+  for insert with check (auth.uid() = user_id);
+
+create policy "Users can update their own tasks." on tasks
+  for update using (auth.uid() = user_id);
+
+create policy "Users can delete their own tasks." on tasks
+  for delete using (auth.uid() = user_id);
+
+-- Indexes for sorting
+create index on tasks (due_date);
+create index on tasks (status, position);
+
+-- Trigger to update `updated_at` timestamp
+create function public.handle_task_update()
+returns trigger
+set search_path = ''
+as $$
+begin
+  new.updated_at = now();
+  return new;
+end;
+$$ language plpgsql security definer;
+
+create trigger on_task_updated
+  before update on tasks
+  for each row execute procedure public.handle_task_update();
+```
+# 3.Task Tags Table
+```
+create table task_tags (
+  id uuid default gen_random_uuid() primary key,
+  task_id uuid references tasks on delete cascade not null,
+  tag text not null
+);
+
+-- Index for faster tag queries
+create index on task_tags (task_id);
+```
+
+# 4.Task Attachments Table
+```
+create table task_attachments (
+  id uuid default gen_random_uuid() primary key,
+  task_id uuid references tasks on delete cascade not null,
+  file_url text not null,
+  uploaded_at timestamp with time zone default now()
+);
+
+-- Set up Storage for task attachments
+insert into storage.buckets (id, name)
+  values ('task_attachments', 'task_attachments');
+
+-- Policies for task attachments
+create policy "Users can upload task attachments." on storage.objects
+  for insert with check (bucket_id = 'task_attachments');
+
+create policy "Users can view their own task attachments." on storage.objects
+  for select using (bucket_id = 'task_attachments');``
+```
+
+# 5. Activity Logs Table
+```
+create table activity_logs (
+  id uuid default gen_random_uuid() primary key,
+  task_id uuid references tasks on delete cascade not null,
+  user_id uuid references auth.users on delete cascade not null,
+  action text check (action in ('Created', 'Updated', 'Deleted')) not null,
+  description text not null,
+  created_at timestamp with time zone default now()
+);
+
+-- Enable RLS and policies
+alter table activity_logs enable row level security;
+
+create policy "Users can view their own activity logs." on activity_logs
+  for select using (auth.uid() = user_id);
+
+create policy "Users can insert activity logs for their own tasks." on activity_logs
+  for insert with check (auth.uid() = user_id);
+```
+
+# 6. Activity Log Function and Trigger
 # Task Management App
+```
+create function public.log_task_activity()
+returns trigger
+language plpgsql
+as $$
+declare
+  action_text text;
+  description_text text;
+begin
+  if (tg_op = 'INSERT') then
+    action_text := 'Created';
+    description_text := 'Task "' || new.title || '" was created.';
+  elsif (tg_op = 'UPDATE') then
+    action_text := 'Updated';
+    description_text := 'Task "' || new.title || '" was updated.';
+  end if;
+
+  insert into activity_logs (task_id, user_id, action, description)
+  values (coalesce(new.id, old.id), coalesce(new.user_id, old.user_id), action_text, description_text);
+
+  return new;
+end;
+$$ security definer;
+
+create trigger on_task_change
+  after insert or update on tasks
+  for each row
+  execute function public.log_task_activity();
+```
 
 ## Challenges Faced
 
