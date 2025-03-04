@@ -113,29 +113,29 @@ export default function TasksList({ user }: { user: any }) {
     setIsModalOpen(true);
   };
 
-  function TaskSkeleton() {
-    return (
-      <div className="flex items-center space-x-4 p-4 bg-white rounded-lg shadow-sm">
-        <Skeleton className="h-5 w-5 rounded" />
-        <div className="flex-1 space-y-2">
-          <Skeleton className="h-4 w-[60%]" />
-          <Skeleton className="h-4 w-[40%]" />
-        </div>
-        <Skeleton className="h-6 w-20 rounded" />
-        <Skeleton className="h-6 w-20 rounded" />
-      </div>
-    );
-  }
+  // function TaskSkeleton() {
+  //   return (
+  //     <div className="flex items-center space-x-4 p-4 bg-white rounded-lg shadow-sm">
+  //       <Skeleton className="h-5 w-5 rounded" />
+  //       <div className="flex-1 space-y-2">
+  //         <Skeleton className="h-4 w-[60%]" />
+  //         <Skeleton className="h-4 w-[40%]" />
+  //       </div>
+  //       <Skeleton className="h-6 w-20 rounded" />
+  //       <Skeleton className="h-6 w-20 rounded" />
+  //     </div>
+  //   );
+  // }
 
-  function LoadingSkeleton() {
-    return (
-      <div className="space-y-4">
-        <TaskSkeleton />
-        <TaskSkeleton />
-        <TaskSkeleton />
-      </div>
-    );
-  }
+  // function LoadingSkeleton() {
+  //   return (
+  //     <div className="space-y-4">
+  //       <TaskSkeleton />
+  //       <TaskSkeleton />
+  //       <TaskSkeleton />
+  //     </div>
+  //   );
+  // }
 
   const statuses = [
     {
@@ -210,7 +210,7 @@ export default function TasksList({ user }: { user: any }) {
     setActiveTask(null);
   };
 
-  if (loading) return <LoadingSkeleton />;
+  // if (loading) return <LoadingSkeleton />;
 
   return (
     <div className="bg-gray-50">
