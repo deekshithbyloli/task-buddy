@@ -54,15 +54,7 @@ export default function TasksList({ user }: { user: any }) {
   );
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTasks, setSelectedTasks] = useState<Set<string>>(new Set());
-  useEffect(() => {
-    fetchTasks(
-      searchQuery,
-      selectedCategory,
-      selectedDueDate,
-      sortField,
-      sortDirection
-    );
-  }, []);
+
 
   useEffect(() => {
     if (user?.id) {
