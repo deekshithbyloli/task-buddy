@@ -39,15 +39,7 @@ export default function TasksBoard({ user }: { user: any }) {
   >("due_date");
   const [activeTask, setActiveTask] = useState<Task | null>(null);
 
-  useEffect(() => {
-    fetchTasks(
-      searchQuery,
-      selectedCategory,
-      selectedDueDate,
-      sortField,
-      sortDirection
-    );
-  }, []);
+
 
   useEffect(() => {
     if (user?.id) {
