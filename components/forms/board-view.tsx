@@ -125,32 +125,32 @@ export default function TasksBoard({ user }: { user: any }) {
     setActiveTask(null);
   };
 
-  if (loading) {
-    return (
-      <div className="p-4 md:p-8 bg-gray-50 min-h-screen">
-        <header className="flex flex-col sm:flex-row gap-4 justify-between items-center mb-6">
-          <Skeleton className="h-8 w-40" />
-          <Skeleton className="h-8 w-24" />
-        </header>
+  // if (loading) {
+  //   return (
+  //     <div className="p-4 md:p-8 bg-gray-50 min-h-screen">
+  //       <header className="flex flex-col sm:flex-row gap-4 justify-between items-center mb-6">
+  //         <Skeleton className="h-8 w-40" />
+  //         <Skeleton className="h-8 w-24" />
+  //       </header>
 
-        <div className="flex flex-col md:flex-row gap-6">
-          {[...Array(3)].map((_, index) => (
-            <div
-              key={index}
-              className="flex-1 bg-white rounded-lg shadow-sm p-4"
-            >
-              <Skeleton className="h-6 w-32 mb-4" />
-              <div className="space-y-2">
-                {[...Array(4)].map((_, i) => (
-                  <Skeleton key={i} className="h-12 w-full rounded-md" />
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  }
+  //       <div className="flex flex-col md:flex-row gap-6">
+  //         {[...Array(3)].map((_, index) => (
+  //           <div
+  //             key={index}
+  //             className="flex-1 bg-white rounded-lg shadow-sm p-4"
+  //           >
+  //             <Skeleton className="h-6 w-32 mb-4" />
+  //             <div className="space-y-2">
+  //               {[...Array(4)].map((_, i) => (
+  //                 <Skeleton key={i} className="h-12 w-full rounded-md" />
+  //               ))}
+  //             </div>
+  //           </div>
+  //         ))}
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="p-4 md:p-8 bg-gray-50 min-h-screen">
